@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bank.customerservice.model.entity.Address;
 import com.bank.customerservice.model.enums.CustomerType;
 import com.bank.customerservice.model.enums.Gender;
 import com.bank.customerservice.model.enums.Status;
@@ -35,7 +34,7 @@ public class CustomerResponse {
 
 	private Status status;
 
-	private List<Address> addresses = new ArrayList<>();
+	private List<AddressResponse> addresses = new ArrayList<>();
 	
 	public CustomerResponse() {
 		
@@ -43,7 +42,7 @@ public class CustomerResponse {
 
 	public CustomerResponse(String customerNumber, Long userId, String firstName, String middleName, String lastName,
 			LocalDate dateOfBirth, Gender gender, String email, String mobileNumber, CustomerType customerType,
-			Status status, List<Address> addresses) {
+			Status status, List<AddressResponse> addresses) {
 		this.customerNumber = customerNumber;
 		this.userId = userId;
 		this.firstName = firstName;
@@ -150,11 +149,11 @@ public class CustomerResponse {
 		this.status = status;
 	}
 
-	public List<Address> getAddresses() {
+	public List<AddressResponse> getAddresses() {
 		return addresses;
 	}
 
-	public void setAddresses(List<Address> addresses) {
+	public void setAddresses(List<AddressResponse> addresses) {
 		this.addresses = addresses;
 	}
 }
