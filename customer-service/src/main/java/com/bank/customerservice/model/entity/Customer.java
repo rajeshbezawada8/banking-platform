@@ -29,10 +29,10 @@ public class Customer extends AuditableEntity {
 	@Column(name = "customer_id")
 	private Long id;
 
-	@Column(name = "customer_number", nullable = false, unique = true, length = 20)
+	@Column(name = "customer_number", nullable = false, unique = true, length = 20, updatable = false)
 	private String customerNumber;
 
-	@Column(name = "user_id", nullable = false, unique = true)
+	@Column(name = "user_id", nullable = true, unique = true, length = 7)
 	private Long userId;
 
 	@Column(name = "first_name", nullable = false, length = 50)
@@ -51,10 +51,10 @@ public class Customer extends AuditableEntity {
 	@Column(name = "gender", nullable = false)
 	private Gender gender;
 
-	@Column(name = "email", nullable = false, length = 100)
+	@Column(name = "email", nullable = false, unique = true, length = 100)
 	private String email;
 
-	@Column(name = "mobile_number", nullable = false, length = 10)
+	@Column(name = "mobile_number", nullable = false, unique = true, length = 10)
 	private String mobileNumber;
 
 	@Enumerated(EnumType.STRING)

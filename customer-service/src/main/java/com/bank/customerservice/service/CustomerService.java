@@ -2,6 +2,9 @@ package com.bank.customerservice.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.bank.customerservice.dto.request.CreateCustomerRequest;
 import com.bank.customerservice.dto.request.UpdateCustomerRequest;
 import com.bank.customerservice.dto.response.CustomerResponse;
@@ -12,15 +15,15 @@ public interface CustomerService {
 
 	CustomerResponse getCustomerById(Long id);
 
-	List<CustomerResponse> getAllCustomers();
+	Page<CustomerResponse> getAllCustomers(Pageable pageable);
 
-	CustomerResponse updateCustomer(String userId, UpdateCustomerRequest request);
+	CustomerResponse updateCustomer(Long customerId, UpdateCustomerRequest request);
 
-	CustomerResponse activateCustomer(String userId);
+	CustomerResponse activateCustomer(Long customerId);
 
-	CustomerResponse deactivateCustomer(String userId);
+	CustomerResponse deactivateCustomer(Long customerId);
 
-	void deleteCustomer(String userId);
+	void closeCustomer(Long customerId);
 
 	List<CustomerResponse> searchByName(String keyword);
 
@@ -28,5 +31,5 @@ public interface CustomerService {
 
 	CustomerResponse searchByMobile(String mobile);
 
-	CustomerResponse getCustomerByNumber(String number);
+	CustomerResponse getCustomerByNumber(String customerNumber);
 }

@@ -21,15 +21,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
 	private Long id;
 
-	@Column(name = "username", nullable = false, unique = true, length = 100)
-	private String userName;
+	@Column(name = "username", nullable = true, unique = true, length = 100)
+	private String username;
 
 	@Column(name = "email", nullable = false, unique = true, length = 255)
 	private String email;
@@ -77,7 +77,7 @@ public class Users {
 	@OneToMany(mappedBy = "user")
 	private List<UserSessions> userSessions;
 	
-	public Users() {
+	public User() {
 		
 	}
 
@@ -85,12 +85,12 @@ public class Users {
 		return id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String userName) {
+		this.username = userName;
 	}
 
 	public String getEmail() {

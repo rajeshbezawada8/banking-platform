@@ -23,7 +23,7 @@ public class UserRoles {
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
-	private Users user;
+	private User user;
 
 	@Id
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -45,11 +45,11 @@ public class UserRoles {
 		
 	}
 
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

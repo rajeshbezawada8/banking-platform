@@ -27,7 +27,7 @@ public class UserSessions {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
-	private Users user;
+	private User user;
 
 	@Column(name = "refresh_token_hash", nullable = false, length = 255)
 	private String refreshTokenHash;
@@ -59,11 +59,11 @@ public class UserSessions {
 		return sessionId;
 	}
 
-	public Users getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
