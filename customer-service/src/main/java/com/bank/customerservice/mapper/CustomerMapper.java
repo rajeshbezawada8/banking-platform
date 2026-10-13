@@ -1,7 +1,11 @@
 package com.bank.customerservice.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
+import com.bank.customerservice.dto.request.CreateAddressRequest;
 import com.bank.customerservice.dto.request.CreateCustomerRequest;
 import com.bank.customerservice.dto.response.CustomerResponse;
 import com.bank.customerservice.model.entity.Address;
@@ -29,12 +33,22 @@ public class CustomerMapper {
 		customer.setMobileNumber(request.getMobileNumber());
 		customer.setCustomerType(request.getCustomerType());
 
-		Address address = addressMapper.toEntity(request.getCreateAddressRequest());
+		List<Address> address = request.getCreateAddressRequest().stream()
+				.map(CreateAddressRequest -> mapAddressToCustomer(CreateAddressRequest, customer))
+				.collect(Collectors.toList());
 
-		address.setCustomer(customer);
-		customer.getAddresses().add(address);
+		customer.getAddresses().addAll(address);
 
 		return customer;
+	}
+
+	private Address mapAddressToCustomer(CreateAddressRequest createAddressRequest, Customer customer) {
+
+		Address address = addressMapper.toEntity(createAddressRequest);
+		address.setCustomer(customer);
+
+		return address;
+
 	}
 
 	public CustomerResponse toDTO(Customer customer) {

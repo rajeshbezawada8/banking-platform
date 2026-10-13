@@ -1,7 +1,7 @@
 package com.bank.customerservice.dto.request;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.List;
 
 import com.bank.customerservice.model.enums.CustomerType;
 import com.bank.customerservice.model.enums.Gender;
@@ -9,6 +9,7 @@ import com.bank.customerservice.model.enums.Gender;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
@@ -41,9 +42,9 @@ public class CreateCustomerRequest {
 	@NotNull(message = "Customer type is required")
 	private CustomerType customerType;
 
-	@NotNull(message = "Customer address is required")
+	@NotEmpty(message = "Customer address is required")
 	@Valid
-	private CreateAddressRequest createAddressRequest;
+	List<@NotNull CreateAddressRequest> createAddressRequest;
 
 	public CreateCustomerRequest() {
 
@@ -56,7 +57,7 @@ public class CreateCustomerRequest {
 			@NotBlank(message = "Email address is required") @Email(message = "Invalid email format") String email,
 			@NotBlank(message = "Mobile number is required") @Pattern(regexp = "^[6-9][0-9]{9}$", message = "Mobile number must be a valid 10-digit Indian mobile number") String mobileNumber,
 			@NotNull(message = "Customer type is required") CustomerType customerType,
-			@NotNull(message = "Customer address is required") @Valid CreateAddressRequest createAddressRequest) {
+			@NotNull(message = "Customer address is required") @Valid List<CreateAddressRequest> createAddressRequest  ) {
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
@@ -66,36 +67,6 @@ public class CreateCustomerRequest {
 		this.mobileNumber = mobileNumber;
 		this.customerType = customerType;
 		this.createAddressRequest = createAddressRequest;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(createAddressRequest, customerType, dateOfBirth, email, firstName, gender, lastName,
-				middleName, mobileNumber);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		CreateCustomerRequest other = (CreateCustomerRequest) obj;
-		return Objects.equals(createAddressRequest, other.createAddressRequest) && customerType == other.customerType
-				&& Objects.equals(dateOfBirth, other.dateOfBirth) && Objects.equals(email, other.email)
-				&& Objects.equals(firstName, other.firstName) && gender == other.gender
-				&& Objects.equals(lastName, other.lastName) && Objects.equals(middleName, other.middleName)
-				&& Objects.equals(mobileNumber, other.mobileNumber);
-	}
-
-	@Override
-	public String toString() {
-		return "CreateCustomerRequest [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", email=" + email + ", mobileNumber="
-				+ mobileNumber + ", customerType=" + customerType + ", createAddressRequest=" + createAddressRequest
-				+ "]";
 	}
 
 	public String getFirstName() {
@@ -162,11 +133,11 @@ public class CreateCustomerRequest {
 		this.customerType = customerType;
 	}
 
-	public CreateAddressRequest getCreateAddressRequest() {
+	public List<CreateAddressRequest> getCreateAddressRequest() {
 		return createAddressRequest;
 	}
 
-	public void setCreateAddressRequest(CreateAddressRequest createAddressRequest) {
+	public void setCreateAddressRequest(List<CreateAddressRequest> createAddressRequest) {
 		this.createAddressRequest = createAddressRequest;
 	}
 

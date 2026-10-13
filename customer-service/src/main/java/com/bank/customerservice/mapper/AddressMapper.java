@@ -1,6 +1,7 @@
 package com.bank.customerservice.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import com.bank.customerservice.model.entity.Address;
 @Component
 public class AddressMapper {
 
-	Address toEntity(CreateAddressRequest request) {
+	public Address toEntity(CreateAddressRequest request) {
 
 		Address address = new Address();
 
@@ -26,8 +27,12 @@ public class AddressMapper {
 
 		return address;
 	}
+	
+	public List<Address> toEntity(List<CreateAddressRequest> request) {
+		return request.stream().map(this::toEntity).collect(Collectors.toList());
+	}
 
-	AddressResponse toDTO(Address address) {
+	public AddressResponse toDTO(Address address) {
 
 		AddressResponse response = new AddressResponse();
 

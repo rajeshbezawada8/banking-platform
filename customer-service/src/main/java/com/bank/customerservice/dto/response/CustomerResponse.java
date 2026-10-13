@@ -1,7 +1,6 @@
 package com.bank.customerservice.dto.response;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.bank.customerservice.model.enums.CustomerType;
@@ -34,7 +33,7 @@ public class CustomerResponse {
 
 	private Status status;
 
-	private List<AddressResponse> addresses = new ArrayList<>();
+	private List<AddressResponse> addresses;
 	
 	public CustomerResponse() {
 		

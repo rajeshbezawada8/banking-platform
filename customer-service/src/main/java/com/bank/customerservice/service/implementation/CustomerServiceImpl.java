@@ -30,42 +30,50 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
 		this.customerRepository = customerRepository;
 		this.customerMapper = customerMapper;
+
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public CustomerResponse createCustomer(CreateCustomerRequest request) {
 
 		validateNewCustomer(request);
+
 		Customer customer = customerMapper.toEntity(request);
 		customer.setCustomerNumber(CustomerNumberGenerator.generate());
+
 		Customer save = customerRepository.save(customer);
+
 		return customerMapper.toDTO(save);
 
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CustomerResponse getCustomerById(Long id) {
 
-		Customer customer = customerRepository.findById(id)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found: " + id));
+		Customer customer = findCustomerById(id);
 		return customerMapper.toDTO(customer);
 
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<CustomerResponse> getAllCustomers(Pageable pageable) {
 
 		return customerRepository.findAll(pageable).map(customerMapper::toDTO);
 
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public CustomerResponse updateCustomer(Long customerId, UpdateCustomerRequest request) {
 
-		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found by ID: " + customerId));
+		Customer customer = findCustomerById(customerId);
+
+		if (customer.getStatus() == Status.CLOSED) {
+			throw new IllegalStateException("Closed customer cannot be updated");
+		}
 
 		if (customerRepository.existsByEmailAndCustomerIdNot(request.getEmail(), customerId)) {
 			throw new CustomerAlreadyExistsException("Customer already exists with email: " + request.getEmail());
@@ -82,24 +90,35 @@ public class CustomerServiceImpl implements CustomerService {
 		Customer save = customerRepository.save(customer);
 
 		return customerMapper.toDTO(save);
+
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public CustomerResponse activateCustomer(Long customerId) {
+
+		Customer customer = findCustomerById(customerId);
+
+		validateCustomerCanBeUpdated(customer);
+
+		if (customer.getStatus() == Status.ACTIVE) {
+			return customerMapper.toDTO(customer);
+		}
+
 		return updateCustomerStatus(customerId, Status.ACTIVE);
+
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public CustomerResponse deactivateCustomer(Long customerId) {
 
 		return updateCustomerStatus(customerId, Status.INACTIVE);
 
 	}
 
-	@Transactional
 	@Override
+	@Transactional
 	public void closeCustomer(Long customerId) {
 
 		Customer customer = customerRepository.findById(customerId)
@@ -110,6 +129,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<CustomerResponse> searchByName(String keyword) {
 
 		List<Customer> searchByName = customerRepository.searchByName(keyword);
@@ -118,6 +138,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CustomerResponse searchByEmail(String email) {
 
 		Customer customer = customerRepository.findByEmail(email)
@@ -127,6 +148,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CustomerResponse searchByMobile(String mobile) {
 
 		Customer customer = customerRepository.findByMobileNumber(mobile)
@@ -136,6 +158,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CustomerResponse getCustomerByNumber(String number) {
 
 		Customer customer = customerRepository.findByCustomerNumber(number)
@@ -155,6 +178,17 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	private Customer findCustomerById(Long customerId) {
+		return customerRepository.findById(customerId)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer not found: " + customerId));
+	}
+
+	private void validateCustomerCanBeUpdated(Customer customer) {
+		if (customer.getStatus() == Status.CLOSED) {
+			throw new IllegalStateException("Closed customer cannot be updated");
+		}
+	}
+
 	private CustomerResponse updateCustomerStatus(Long customerId, Status newStatus) {
 
 		Customer customer = customerRepository.findById(customerId)
@@ -167,7 +201,7 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 
 		customer.setStatus(newStatus);
-		
+
 		return customerMapper.toDTO(customerRepository.save(customer));
 
 	}
