@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.bank.customerservice.dto.request.CreateAddressRequest;
+import com.bank.customerservice.dto.request.UpdateAddressRequest;
 import com.bank.customerservice.dto.response.AddressResponse;
 import com.bank.customerservice.model.entity.Address;
+import com.bank.customerservice.model.entity.Customer;
 
 @Component
 public class AddressMapper {
@@ -30,6 +32,25 @@ public class AddressMapper {
 	
 	public List<Address> toEntity(List<CreateAddressRequest> request) {
 		return request.stream().map(this::toEntity).collect(Collectors.toList());
+	}
+	
+	public Address toEntity(Customer customer, UpdateAddressRequest request) {
+		
+		Address address = new Address();
+		
+		address.setAddressLine1(request.getAddressLine1());
+		address.setAddressLine2(request.getAddressLine2());
+		address.setCity(request.getCity());
+		address.setState(request.getState());
+		address.setPostalCode(request.getPostalCode());
+		address.setCountry(request.getCountry());
+		address.setAddressType(request.getAddressType());
+		address.setPrimaryAddress(request.getPrimaryAddress());
+		address.setCustomer(customer);
+		
+		
+		return address;
+		
 	}
 
 	public AddressResponse toDTO(Address address) {

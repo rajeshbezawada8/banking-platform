@@ -32,4 +32,5 @@ public interface CustomerService {
 	CustomerResponse searchByMobile(String mobile);
 
 	CustomerResponse getCustomerByNumber(String customerNumber);
+	
 }
