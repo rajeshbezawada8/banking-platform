@@ -75,11 +75,11 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new IllegalStateException("Closed customer cannot be updated");
 		}
 
-		if (customerRepository.existsByEmailAndCustomerIdNot(request.getEmail(), customerId)) {
+		if (customerRepository.existsByEmailAndIdNot(request.getEmail(), customerId)) {
 			throw new CustomerAlreadyExistsException("Customer already exists with email: " + request.getEmail());
 		}
 
-		if (customerRepository.existsByMobileNumberAndCustomerIdNot(request.getMobileNumber(), customerId)) {
+		if (customerRepository.existsByMobileNumberAndIdNot(request.getMobileNumber(), customerId)) {
 			throw new CustomerAlreadyExistsException(
 					"Customer already exists with Mobile: " + request.getMobileNumber());
 		}

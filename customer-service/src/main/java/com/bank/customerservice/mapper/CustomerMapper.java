@@ -10,6 +10,7 @@ import com.bank.customerservice.dto.request.CreateCustomerRequest;
 import com.bank.customerservice.dto.response.CustomerResponse;
 import com.bank.customerservice.model.entity.Address;
 import com.bank.customerservice.model.entity.Customer;
+import com.bank.customerservice.model.enums.Status;
 
 @Component
 public class CustomerMapper {
@@ -32,6 +33,8 @@ public class CustomerMapper {
 		customer.setEmail(request.getEmail());
 		customer.setMobileNumber(request.getMobileNumber());
 		customer.setCustomerType(request.getCustomerType());
+		
+		customer.setStatus(Status.ACTIVE);
 
 		List<Address> address = request.getCreateAddressRequest().stream()
 				.map(CreateAddressRequest -> mapAddressToCustomer(CreateAddressRequest, customer))
