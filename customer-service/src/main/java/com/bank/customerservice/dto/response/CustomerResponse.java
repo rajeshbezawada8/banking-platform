@@ -1,158 +1,160 @@
 package com.bank.customerservice.dto.response;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import com.bank.customerservice.model.enums.CustomerType;
 import com.bank.customerservice.model.enums.Gender;
 import com.bank.customerservice.model.enums.Status;
 
+import java.time.LocalDate;
+import java.util.List;
+
 public class CustomerResponse {
-	
-	private Long id;
 
-	private String customerNumber;
+    private Long id;
 
-	private Long userId;
+    private String customerNumber;
 
-	private String firstName;
+    private Long userId;
 
-	private String middleName;
+    private String firstName;
 
-	private String lastName;
+    private String middleName;
 
-	private LocalDate dateOfBirth;
+    private String lastName;
 
-	private Gender gender;
+    private LocalDate dateOfBirth;
 
-	private String email;
+    private Gender gender;
 
-	private String mobileNumber;
+    private String email;
 
-	private CustomerType customerType;
+    private String mobileNumber;
 
-	private Status status;
+    private CustomerType customerType;
 
-	private List<AddressResponse> addresses;
-	
-	public CustomerResponse() {
-		
-	}
+    private Status status;
 
-	public CustomerResponse(String customerNumber, Long userId, String firstName, String middleName, String lastName,
-			LocalDate dateOfBirth, Gender gender, String email, String mobileNumber, CustomerType customerType,
-			Status status, List<AddressResponse> addresses) {
-		this.customerNumber = customerNumber;
-		this.userId = userId;
-		this.firstName = firstName;
-		this.middleName = middleName;
-		this.lastName = lastName;
-		this.dateOfBirth = dateOfBirth;
-		this.gender = gender;
-		this.email = email;
-		this.mobileNumber = mobileNumber;
-		this.customerType = customerType;
-		this.status = status;
-		this.addresses = addresses;
-	}
+    private List<AddressResponse> addresses;
 
-	public Long getId() {
-		return id;
-	}
+    public CustomerResponse() {
 
-	public String getCustomerNumber() {
-		return customerNumber;
-	}
+    }
 
-	public void setCustomerNumber(String customerNumber) {
-		this.customerNumber = customerNumber;
-	}
+    public CustomerResponse(String customerNumber, Long userId, String firstName, String middleName, String lastName, LocalDate dateOfBirth, Gender gender, String email, String mobileNumber, CustomerType customerType, Status status, List<AddressResponse> addresses) {
+        this.customerNumber = customerNumber;
+        this.userId = userId;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.email = email;
+        this.mobileNumber = mobileNumber;
+        this.customerType = customerType;
+        this.status = status;
+        this.addresses = addresses;
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getCustomerNumber() {
+        return customerNumber;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setCustomerNumber(String customerNumber) {
+        this.customerNumber = customerNumber;
+    }
 
-	public String getMiddleName() {
-		return middleName;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
+    public String getMiddleName() {
+        return middleName;
+    }
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-	public Gender getGender() {
-		return gender;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-	public String getMobileNumber() {
-		return mobileNumber;
-	}
+    public Gender getGender() {
+        return gender;
+    }
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
 
-	public CustomerType getCustomerType() {
-		return customerType;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setCustomerType(CustomerType customerType) {
-		this.customerType = customerType;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Status getStatus() {
-		return status;
-	}
+    public String getMobileNumber() {
+        return mobileNumber;
+    }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+    public void setMobileNumber(String mobileNumber) {
+        this.mobileNumber = mobileNumber;
+    }
 
-	public List<AddressResponse> getAddresses() {
-		return addresses;
-	}
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
 
-	public void setAddresses(List<AddressResponse> addresses) {
-		this.addresses = addresses;
-	}
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public List<AddressResponse> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<AddressResponse> addresses) {
+        this.addresses = addresses;
+    }
 }

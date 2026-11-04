@@ -38,7 +38,7 @@ public class CustomerMapper {
 
 		List<Address> address = request.getCreateAddressRequest().stream()
 				.map(CreateAddressRequest -> mapAddressToCustomer(CreateAddressRequest, customer))
-				.collect(Collectors.toList());
+				.toList();
 
 		customer.getAddresses().addAll(address);
 
@@ -57,6 +57,8 @@ public class CustomerMapper {
 	public CustomerResponse toDTO(Customer customer) {
 
 		CustomerResponse response = new CustomerResponse();
+
+		response.setId(customer.getId());
 
 		response.setCustomerNumber(customer.getCustomerNumber());
 		response.setUserId(customer.getUserId());

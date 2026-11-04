@@ -1,153 +1,195 @@
 package com.bank.customerservice.model.entity;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
+import com.bank.customerservice.model.enums.ContentType;
 import com.bank.customerservice.model.enums.DocumentStatus;
 import com.bank.customerservice.model.enums.DocumentType;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_documents")
 public class Document extends AuditableEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "document_id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "document_id")
+    private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "customer_id", nullable = false)
-	private Customer customer;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "document_type", nullable = false)
-	private DocumentType documentType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "document_type", nullable = false)
+    private DocumentType documentType;
 
-	@Column(name = "document_number", nullable = false, length = 100)
-	private String documentNumber;
+    @Column(name = "document_number", nullable = false, length = 100)
+    private String documentNumber;
 
-	@Column(name = "document_hash", length = 255)
-	private String documentHash;
+    @Column(name = "document_hash", length = 255)
+    private String documentHash;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "document_status", nullable = false)
-	private DocumentStatus status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "document_status", nullable = false)
+    private DocumentStatus status;
 
-	@Column(name = "issued_date", nullable = false)
-	private LocalDate issuedDate;
+    @Column(name = "issued_date", nullable = false)
+    private LocalDate issuedDate;
 
-	@Column(name = "expiry_date", nullable = false)
-	private LocalDate expiryDate;
+    @Column(name = "expiry_date", nullable = false)
+    private LocalDate expiryDate;
 
-	@Column(name = "verified_at")
-	private LocalDateTime verifiedAt;
+    @Column(name = "verified_at")
+    private LocalDateTime verifiedAt;
 
-	@Column(name = "verified_by")
-	private Long verifiedBy;
+    @Column(name = "verified_by")
+    private Long verifiedBy;
 
-	public Document() {
+    @Column(name = "storage_key", nullable = false)
+    private String storageKey;
 
-	}
+    @Column(name = "original_file_name")
+    private String originalFileName;
 
-	public Document(Customer customer, DocumentType documentType, String documentNumber, String documentHash,
-			DocumentStatus status, LocalDate issuedDate, LocalDate expiryDate, LocalDateTime verifiedAt,
-			Long verifiedBy) {
-		this.customer = customer;
-		this.documentType = documentType;
-		this.documentNumber = documentNumber;
-		this.documentHash = documentHash;
-		this.status = status;
-		this.issuedDate = issuedDate;
-		this.expiryDate = expiryDate;
-		this.verifiedAt = verifiedAt;
-		this.verifiedBy = verifiedBy;
-	}
+    @Column(name = "content_type")
+    private ContentType contentType;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "file_size")
+    private Long fileSize;
 
-	public Customer getCustomer() {
-		return customer;
-	}
+    public Document() {
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+    }
 
-	public DocumentType getDocumentType() {
-		return documentType;
-	}
+    public Document(Customer customer, DocumentType documentType, String documentNumber, String documentHash,
+                    DocumentStatus status, LocalDate issuedDate, LocalDate expiryDate, LocalDateTime verifiedAt,
+                    Long verifiedBy, String storageKey, String originalFileName, ContentType contentType, Long fileSize) {
+        this.customer = customer;
+        this.documentType = documentType;
+        this.documentNumber = documentNumber;
+        this.documentHash = documentHash;
+        this.status = status;
+        this.issuedDate = issuedDate;
+        this.expiryDate = expiryDate;
+        this.verifiedAt = verifiedAt;
+        this.verifiedBy = verifiedBy;
+        this.storageKey = storageKey;
+        this.originalFileName = originalFileName;
+        this.contentType = contentType;
+        this.fileSize = fileSize;
+    }
 
-	public void setDocumentType(DocumentType documentType) {
-		this.documentType = documentType;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getDocumentNumber() {
-		return documentNumber;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDocumentNumber(String documentNumber) {
-		this.documentNumber = documentNumber;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 
-	public String getDocumentHash() {
-		return documentHash;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	public void setDocumentHash(String documentHash) {
-		this.documentHash = documentHash;
-	}
+    public DocumentType getDocumentType() {
+        return documentType;
+    }
 
-	public DocumentStatus getStatus() {
-		return status;
-	}
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
+    }
 
-	public void setStatus(DocumentStatus status) {
-		this.status = status;
-	}
+    public String getDocumentNumber() {
+        return documentNumber;
+    }
 
-	public LocalDate getIssuedDate() {
-		return issuedDate;
-	}
+    public void setDocumentNumber(String documentNumber) {
+        this.documentNumber = documentNumber;
+    }
 
-	public void setIssuedDate(LocalDate issuedDate) {
-		this.issuedDate = issuedDate;
-	}
+    public String getDocumentHash() {
+        return documentHash;
+    }
 
-	public LocalDate getExpiryDate() {
-		return expiryDate;
-	}
+    public void setDocumentHash(String documentHash) {
+        this.documentHash = documentHash;
+    }
 
-	public void setExpiryDate(LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
+    public DocumentStatus getStatus() {
+        return status;
+    }
 
-	public LocalDateTime getVerifiedAt() {
-		return verifiedAt;
-	}
+    public void setStatus(DocumentStatus status) {
+        this.status = status;
+    }
 
-	public void setVerifiedAt(LocalDateTime verifiedAt) {
-		this.verifiedAt = verifiedAt;
-	}
+    public LocalDate getIssuedDate() {
+        return issuedDate;
+    }
 
-	public Long getVerifiedBy() {
-		return verifiedBy;
-	}
+    public void setIssuedDate(LocalDate issuedDate) {
+        this.issuedDate = issuedDate;
+    }
 
-	public void setVerifiedBy(Long verifiedBy) {
-		this.verifiedBy = verifiedBy;
-	}
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public LocalDateTime getVerifiedAt() {
+        return verifiedAt;
+    }
+
+    public void setVerifiedAt(LocalDateTime verifiedAt) {
+        this.verifiedAt = verifiedAt;
+    }
+
+    public Long getVerifiedBy() {
+        return verifiedBy;
+    }
+
+    public void setVerifiedBy(Long verifiedBy) {
+        this.verifiedBy = verifiedBy;
+    }
+
+    public String getStorageKey() {
+        return storageKey;
+    }
+
+    public void setStorageKey(String storageKey) {
+        this.storageKey = storageKey;
+    }
+
+    public String getOriginalFileName() {
+        return originalFileName;
+    }
+
+    public void setOriginalFileName(String originalFileName) {
+        this.originalFileName = originalFileName;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
+    }
+
+    public Long getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
 }
